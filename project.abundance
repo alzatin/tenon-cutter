@@ -1,14 +1,114 @@
 {
     "atomType": "Molecule",
-    "name": "tenon cutter",
+    "name": "tenon-cutter",
     "x": 0,
     "y": 0,
     "uniqueID": 1744210642818,
-    "ioValues": [],
+    "ioValues": [
+        {
+            "name": "geometry",
+            "ioValue": 10
+        }
+    ],
     "description": "Molecules provide an organizational structure to contain atoms. Double click on a molecule to enter it. Use the up arrow in the upper right hand corner of the screen to go up one level.",
     "topLevel": true,
-    "allAtoms": [],
-    "allConnectors": [],
+    "allAtoms": [
+        {
+            "atomType": "Output",
+            "name": "Output",
+            "x": 0.98,
+            "y": 0.5,
+            "uniqueID": 1744210651620,
+            "ioValues": [],
+            "description": "Connect geometry here to make it available in the next level up. "
+        },
+        {
+            "atomType": "Input",
+            "name": "geometry",
+            "x": 0.04,
+            "y": 0.6330275229357799,
+            "uniqueID": 1744210687021,
+            "ioValues": [],
+            "description": "Adds an input to the parent molecule. If the parent molecule is the top level of the project then the input will be available when the project is shared or imported into another project. Name is editable",
+            "type": "number"
+        },
+        {
+            "atomType": "Code",
+            "name": "Code",
+            "x": 0.4713919726729291,
+            "y": 0.4862385321100917,
+            "uniqueID": 1744210696631,
+            "ioValues": [
+                {
+                    "name": "inputShape",
+                    "ioValue": 1744210778794
+                },
+                {
+                    "name": "dist",
+                    "ioValue": 10
+                },
+                {
+                    "name": "height",
+                    "ioValue": 3
+                }
+            ],
+            "description": "Defines a Replicad code block.",
+            "codeVersion": 1,
+            "code": " \n      //Inputs:[inputShape, dist, height]\n      //This defines the molecules inputs and creates variables with the same names which can be referenced in the code\n      \n      //Takes the address and gets the shape from the library\n      let importedShape = library[inputShape]\n\n\n      \n      //This makes a new copy of of the shape (to prevent garbage collection issues),\n      //and moves it in the X direction. Note that this will not work if the input is an assembly\n      let movedShape = importedShape.geometry[0].clone().translate([dist,0,0])\n      \n      //Console.log works for debugging to better see what is happening under the hood\n      console.log(\"Shape:\")\n      console.log(importedShape.geometry[0].boundingBox.center);\n      \n      //Shapes stored in the library have tags, a color, a plane, and a bill of materials like this. We don't modify them here\n      let shape1 = {\n        geometry: [movedShape],\n        tags: importedShape.tags,\n        color: importedShape.color,\n        plane: importedShape.plane,\n        bom: importedShape.bom\n      }\n      \n      //We could at this point return shape1 as a complete shape and it will be automatically written to the library for us\n      //return shape1\n      \n      //We can also create a new shape from scratch\n      let createdRectangle = replicad.drawRectangle(5,7)\n      //This is the plane we are going to put our new shape on\n      const newPlane = new Plane().pivot(0, 'Y');\n      //And we extrude the shape to make it 3D\n      let createdShape = createdRectangle.sketchOnPlane(newPlane).extrude(height)\n      \n      //For our new geometry we need to define the tags, color, plane, etc\n      let shape2 = {\n          geometry: [createdShape], \n          tags: [\"aTag\"],\n          color: '#A3CE5B',\n          plane: newPlane,\n          bom: []\n      }\n      \n      //Then we can return our created shape in just the same way\n      //return shape2\n      \n      //If we want to return both shapes at once, we can create an assembly with them\n      let anAssembly = {\n        geometry: [shape1, shape2], \n        tags: [\"aNewTag\"],\n        color: '#A3CF5B',\n        plane: newPlane,\n        bom: []\n      }\n      \n      //And we can return that in the same way\n      return shape1\n      \n      \n          /**\n          To Use the Code Atom, enter your inputs to the input list a.e Inputs:[shape, height]\n          If your input is connected to another atom with a replicad geometry you can access its geometry by looking up its ID in your library. a.e library[Input1].geometry[0] \n          Use any replicad available methods to modify your geometry. Learn more about all of the available methods at \n          https://replicad.xyz/docs/introapp/UserGuide.html \n          Return a replicad object that includes geometry, color, tags and plane. \n      \n      \n          Example Code Atom:\n      \n            Inputs:[shape, x];\n      \n            let finalShape = library[shape].geometry[0].clone.translate[x,0,0]\n      \n            return {geometry: finalShape, color: library[shape].color, plane: library[shape].plane, tags: library[shape].tags }\n      \n            - See more examples at _______ \n      \n      \n          */\n      "
+        },
+        {
+            "atomType": "Rectangle",
+            "name": "Rectangle",
+            "x": 0.13065755764304013,
+            "y": 0.3027522935779816,
+            "uniqueID": 1744210776951,
+            "ioValues": [
+                {
+                    "name": "x length",
+                    "ioValue": 30
+                },
+                {
+                    "name": "y length",
+                    "ioValue": 5
+                }
+            ],
+            "description": "Creates a new rectangle."
+        },
+        {
+            "atomType": "Extrude",
+            "name": "Extrude",
+            "x": 0.25362937660119556,
+            "y": 0.3058103975535168,
+            "uniqueID": 1744210778794,
+            "ioValues": [
+                {
+                    "name": "geometry",
+                    "ioValue": 1744210776951
+                },
+                {
+                    "name": "height",
+                    "ioValue": 3
+                }
+            ],
+            "description": "Extrudes a 2D shape. Input can be negitive. "
+        }
+    ],
+    "allConnectors": [
+        {
+            "ap1Name": "geometry",
+            "ap2Name": "geometry",
+            "ap2Primary": true,
+            "ap1ID": 1744210776951,
+            "ap2ID": 1744210778794
+        },
+        {
+            "ap1Name": "geometry",
+            "ap2Name": "inputShape",
+            "ap2Primary": false,
+            "ap1ID": 1744210778794,
+            "ap2ID": 1744210696631
+        }
+    ],
     "unitsKey": "Inches",
     "fileTypeVersion": 1,
     "compiledBom": {},
