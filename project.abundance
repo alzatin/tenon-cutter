@@ -23,12 +23,7 @@
             "x": 0.98,
             "y": 0.5,
             "uniqueID": 1744210651620,
-            "ioValues": [
-                {
-                    "name": "number or geometry",
-                    "ioValue": 1744213510811
-                }
-            ],
+            "ioValues": [],
             "description": "Connect geometry here to make it available in the next level up. "
         },
         {
@@ -165,6 +160,30 @@
             "ioValues": [],
             "description": "Adds an input to the parent molecule. If the parent molecule is the top level of the project then the input will be available when the project is shared or imported into another project. Name is editable",
             "type": "number"
+        },
+        {
+            "atomType": "Code",
+            "name": "Code",
+            "x": 0.5390143737166325,
+            "y": 0.8195718654434251,
+            "uniqueID": 1744221896881,
+            "ioValues": [
+                {
+                    "name": "inputShape",
+                    "ioValue": 1744210778794
+                },
+                {
+                    "name": "dist",
+                    "ioValue": 10
+                },
+                {
+                    "name": "height",
+                    "ioValue": 10
+                }
+            ],
+            "description": "Defines a Replicad code block.",
+            "codeVersion": 1,
+            "code": " \n      //Inputs:[inputShape, dist, height]\n      //This defines the molecules inputs and creates variables with the same names which can be referenced in the code\n      \n      //Takes the address and gets the shape from the library\n      let importedShape = library[inputShape]\n      \n      \n      let center = importedShape.geometry[0].boundingBox.center\nconsole.log(center)\n      //Shapes stored in the library have tags, a color, a plane, and a bill of materials like this. We don't modify them here\n      let shape1 = {\n        geometry: [importedShape.clone().scale(center, 1.1)],\n        tags: importedShape.tags,\n        color: importedShape.color,\n        plane: importedShape.plane,\n        bom: importedShape.bom\n      }\n      \n      \n      \n      //And we can return that in the same way\n      return shape1\n      \n      \n          /**\n          To Use the Code Atom, enter your inputs to the input list a.e Inputs:[shape, height]\n          If your input is connected to another atom with a replicad geometry you can access its geometry by looking up its ID in your library. a.e library[Input1].geometry[0] \n          Use any replicad available methods to modify your geometry. Learn more about all of the available methods at \n          https://replicad.xyz/docs/introapp/UserGuide.html \n          Return a replicad object that includes geometry, color, tags and plane. \n      \n      \n          Example Code Atom:\n      \n            Inputs:[shape, x];\n      \n            let finalShape = library[shape].geometry[0].clone.translate[x,0,0]\n      \n            return {geometry: finalShape, color: library[shape].color, plane: library[shape].plane, tags: library[shape].tags }\n      \n            - See more examples at _______ \n      \n      \n          */\n      "
         }
     ],
     "allConnectors": [
@@ -195,6 +214,13 @@
             "ap2Primary": true,
             "ap1ID": 1744210776951,
             "ap2ID": 1744210778794
+        },
+        {
+            "ap1Name": "geometry",
+            "ap2Name": "inputShape",
+            "ap2Primary": false,
+            "ap1ID": 1744210778794,
+            "ap2ID": 1744221896881
         },
         {
             "ap1Name": "geometry",
