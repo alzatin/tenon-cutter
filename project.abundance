@@ -53,15 +53,15 @@
                     "ioValue": 10
                 },
                 {
-                    "name": "thickness",
-                    "ioValue": 0.75
-                },
-                {
                     "name": "dist",
                     "ioValue": 10
                 },
                 {
                     "name": "height",
+                    "ioValue": 10
+                },
+                {
+                    "name": "thickness",
                     "ioValue": 10
                 }
             ],
@@ -132,7 +132,7 @@
             "ioValues": [
                 {
                     "name": "geometry",
-                    "ioValue": 1744210778794
+                    "ioValue": 10
                 }
             ],
             "description": "Tags geometry so that it can be extracted later.",
@@ -176,6 +176,13 @@
             "ap2ID": 1744210696631
         },
         {
+            "ap1Name": "number or geometry",
+            "ap2Name": "geometry",
+            "ap2Primary": true,
+            "ap1ID": 1744210687021,
+            "ap2ID": 1744213495789
+        },
+        {
             "ap1Name": "geometry",
             "ap2Name": "Shape 4",
             "ap2Primary": false,
@@ -188,13 +195,6 @@
             "ap2Primary": true,
             "ap1ID": 1744210776951,
             "ap2ID": 1744210778794
-        },
-        {
-            "ap1Name": "geometry",
-            "ap2Name": "geometry",
-            "ap2Primary": true,
-            "ap1ID": 1744210778794,
-            "ap2ID": 1744213495789
         },
         {
             "ap1Name": "geometry",
